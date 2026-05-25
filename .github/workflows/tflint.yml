@@ -1,0 +1,41 @@
+name: tflint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  tflint:
+    name: ${{ matrix.root }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        root:
+          - github/chikachow
+          - github/cysp
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - uses: terraform-linters/setup-tflint@b480b8fcdaa6f2c577f8e4fa799e89e756bb7c93 # v6.2.2
+
+      - run: tflint --chdir="${{ matrix.root }}" --format=compact
+
+  required:
+    name: tflint
+    runs-on: ubuntu-latest
+    needs: tflint
+    if: ${{ always() }}
+
+    steps:
+      - run: |
+          if [ "${{ needs.tflint.result }}" != "success" ]; then
+            exit 1
+          fi
