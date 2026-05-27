@@ -1,6 +1,6 @@
 resource "github_repository" "infrastructure" {
   name       = "infrastructure"
-  visibility = "public"
+  visibility = "private"
 
   has_issues      = false
   has_projects    = false
