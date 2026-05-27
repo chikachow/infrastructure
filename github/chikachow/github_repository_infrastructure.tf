@@ -75,41 +75,6 @@ resource "github_repository_ruleset" "infrastructure_protect_default_branch" {
   }
 }
 
-removed {
-  from = github_branch_protection.infrastructure_pull_request_approval
-
-  lifecycle {
-    destroy = false
-  }
-}
-
-import {
-  to = github_branch_protection_v3.infrastructure_pull_request_approval
-  id = "infrastructure:main"
-}
-
-resource "github_branch_protection_v3" "infrastructure_pull_request_approval" {
-  repository = github_repository.infrastructure.name
-  branch     = github_branch_default.infrastructure.branch
-
-  enforce_admins = false
-
-  required_status_checks {
-    strict = false
-    checks = [
-      "atlantis/apply:3852202",
-    ]
-  }
-
-  required_pull_request_reviews {
-    required_approving_review_count = 1
-
-    bypass_pull_request_allowances {
-      apps = [local.atlantis_github_app_slug]
-    }
-  }
-}
-
 resource "github_repository_ruleset" "infrastructure_tflint" {
   repository = github_repository.infrastructure.name
 
@@ -132,6 +97,33 @@ resource "github_repository_ruleset" "infrastructure_tflint" {
       required_check {
         context        = "tflint"
         integration_id = 15368
+      }
+    }
+  }
+}
+
+resource "github_repository_ruleset" "infrastructure_atlantis_apply" {
+  repository = github_repository.infrastructure.name
+
+  name   = "atlantis/apply"
+  target = "branch"
+
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    required_status_checks {
+      strict_required_status_checks_policy = false
+
+      required_check {
+        context        = "atlantis/apply"
+        integration_id = 3852202
       }
     }
   }
