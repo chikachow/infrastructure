@@ -1,130 +1,40 @@
-resource "github_repository" "infrastructure" {
+module "infrastructure_repository" {
+  source = "../../modules/github-repository"
+
   name       = "infrastructure"
   visibility = "public"
-
-  has_issues      = false
-  has_projects    = false
-  has_wiki        = false
-  has_discussions = false
-
-  allow_merge_commit = true
-  allow_squash_merge = false
-  allow_rebase_merge = true
-  allow_auto_merge   = false
-
-  allow_update_branch         = false
-  archive_on_destroy          = true
-  delete_branch_on_merge      = true
-  is_template                 = false
-  web_commit_signoff_required = false
-  merge_commit_message        = "PR_TITLE"
-  merge_commit_title          = "MERGE_MESSAGE"
-  squash_merge_commit_message = "COMMIT_MESSAGES"
-  squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
-
-  topics = []
-
-  security_and_analysis {
-    secret_scanning {
-      status = "enabled"
-    }
-
-    secret_scanning_push_protection {
-      status = "enabled"
-    }
-  }
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
-resource "github_branch_default" "infrastructure" {
-  repository = github_repository.infrastructure.name
-  branch     = "main"
+module "infrastructure_ruleset_protect_default_branch" {
+  source = "../../modules/github-repository-ruleset-protect-default-branch"
+
+  repository = module.infrastructure_repository.name
 }
 
-resource "github_repository_dependabot_security_updates" "infrastructure" {
-  repository = github_repository.infrastructure.name
-  enabled    = true
-}
+module "infrastructure_ruleset_tflint" {
+  source = "../../modules/github-repository-ruleset-required-status-checks"
 
-resource "github_repository_vulnerability_alerts" "infrastructure" {
-  repository = github_repository.infrastructure.name
-  enabled    = true
-}
+  repository = module.infrastructure_repository.name
+  name       = "tflint"
 
-resource "github_repository_ruleset" "infrastructure_protect_default_branch" {
-  repository = github_repository.infrastructure.name
-
-  name   = "protect default branch"
-  target = "branch"
-
-  enforcement = "active"
-
-  conditions {
-    ref_name {
-      include = ["~DEFAULT_BRANCH"]
-      exclude = []
-    }
-  }
-
-  rules {
-    deletion         = true
-    non_fast_forward = true
-  }
-}
-
-resource "github_repository_ruleset" "infrastructure_tflint" {
-  repository = github_repository.infrastructure.name
-
-  name   = "tflint"
-  target = "branch"
-
-  enforcement = "active"
-
-  conditions {
-    ref_name {
-      include = ["~DEFAULT_BRANCH"]
-      exclude = []
-    }
-  }
-
-  rules {
-    required_status_checks {
-      strict_required_status_checks_policy = false
-
-      required_check {
-        context        = "tflint"
-        integration_id = 15368
-      }
+  required_status_checks = {
+    tflint = {
+      context        = "tflint"
+      integration_id = 15368
     }
   }
 }
 
-resource "github_repository_ruleset" "infrastructure_atlantis_apply" {
-  repository = github_repository.infrastructure.name
+module "infrastructure_ruleset_atlantis_apply" {
+  source = "../../modules/github-repository-ruleset-required-status-checks"
 
-  name   = "atlantis/apply"
-  target = "branch"
+  repository = module.infrastructure_repository.name
+  name       = "atlantis/apply"
 
-  enforcement = "active"
-
-  conditions {
-    ref_name {
-      include = ["~DEFAULT_BRANCH"]
-      exclude = []
-    }
-  }
-
-  rules {
-    required_status_checks {
-      strict_required_status_checks_policy = false
-
-      required_check {
-        context        = "atlantis/apply"
-        integration_id = 3852202
-      }
+  required_status_checks = {
+    atlantis_apply = {
+      context        = "atlantis/apply"
+      integration_id = 3852202
     }
   }
 }
