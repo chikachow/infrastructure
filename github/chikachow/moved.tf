@@ -32,3 +32,23 @@ moved {
   from = github_repository_ruleset.infrastructure_atlantis_apply
   to   = module.infrastructure_ruleset_atlantis_apply.github_repository_ruleset.this
 }
+
+moved {
+  from = github_repository.booze
+  to   = module.booze_repository.github_repository.this
+}
+
+moved {
+  from = github_branch_default.booze
+  to   = module.booze_repository.github_branch_default.this[0]
+}
+
+moved {
+  from = github_repository_dependabot_security_updates.booze
+  to   = module.booze_repository.github_repository_dependabot_security_updates.this[0]
+}
+
+moved {
+  from = github_repository_vulnerability_alerts.booze
+  to   = module.booze_repository.github_repository_vulnerability_alerts.this[0]
+}

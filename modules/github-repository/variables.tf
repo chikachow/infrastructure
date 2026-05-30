@@ -106,7 +106,7 @@ variable "allow_update_branch" {
 variable "allow_forking" {
   description = "Whether active repositories allow forking."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "delete_branch_on_merge" {

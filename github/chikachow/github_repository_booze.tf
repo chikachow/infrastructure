@@ -1,34 +1,28 @@
-resource "github_repository" "booze" {
+module "booze_repository" {
+  source = "../../modules/github-repository"
+
   name       = "booze"
-  visibility = "private"
+  visibility = "public"
 
-  auto_init = true
+  has_issues = true
+}
 
-  has_projects = false
-  has_wiki     = false
+module "booze_ruleset_protect_default_branch" {
+  source = "../../modules/github-repository-ruleset-protect-default-branch"
 
-  allow_merge_commit = false
-  allow_squash_merge = false
+  repository = module.booze_repository.name
+}
 
-  archive_on_destroy     = true
-  delete_branch_on_merge = true
+module "booze_ruleset_ci" {
+  source = "../../modules/github-repository-ruleset-required-status-checks"
 
-  lifecycle {
-    prevent_destroy = true
+  repository = module.booze_repository.name
+  name       = "ci"
+
+  required_status_checks = {
+    ci = {
+      context        = "ci"
+      integration_id = 15368
+    }
   }
-}
-
-resource "github_branch_default" "booze" {
-  repository = github_repository.booze.name
-  branch     = "main"
-}
-
-resource "github_repository_dependabot_security_updates" "booze" {
-  repository = github_repository.booze.name
-  enabled    = true
-}
-
-resource "github_repository_vulnerability_alerts" "booze" {
-  repository = github_repository.booze.name
-  enabled    = true
 }
