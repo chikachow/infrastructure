@@ -6,9 +6,9 @@ resource "github_organization_settings" "chikachow" {
   has_organization_projects = true
   has_repository_projects   = true
 
-  members_can_create_repositories          = true
-  members_can_create_public_repositories   = true
-  members_can_create_private_repositories  = true
+  members_can_create_repositories          = false
+  members_can_create_public_repositories   = false
+  members_can_create_private_repositories  = false
   members_can_create_internal_repositories = false
   members_can_create_pages                 = true
   members_can_fork_private_repositories    = false
