@@ -20,7 +20,7 @@ module "infrastructure_ruleset_tflint" {
   required_status_checks = {
     tflint = {
       context        = "tflint"
-      integration_id = 15368
+      integration_id = local.github_actions_integration_id
     }
   }
 }
@@ -34,7 +34,7 @@ module "infrastructure_ruleset_atlantis_apply" {
   required_status_checks = {
     atlantis_apply = {
       context        = "atlantis/apply"
-      integration_id = 3852202
+      integration_id = local.atlantis_integration_id
     }
   }
 }

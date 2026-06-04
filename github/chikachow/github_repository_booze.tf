@@ -22,7 +22,7 @@ module "booze_ruleset_ci" {
   required_status_checks = {
     ci = {
       context        = "ci"
-      integration_id = 15368
+      integration_id = local.github_actions_integration_id
     }
   }
 }
