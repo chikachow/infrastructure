@@ -20,8 +20,8 @@ variable "enforcement" {
 }
 
 variable "required_status_checks" {
-  description = "Required status checks keyed by stable identifier."
-  type = map(object({
+  description = "Required status checks."
+  type = set(object({
     context        = string
     integration_id = number
   }))
