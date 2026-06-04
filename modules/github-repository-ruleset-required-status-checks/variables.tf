@@ -27,6 +27,16 @@ variable "required_status_checks" {
   }))
 }
 
+variable "bypass_actors" {
+  description = "Ruleset bypass actors."
+  type = list(object({
+    actor_id    = number
+    actor_type  = string
+    bypass_mode = string
+  }))
+  default = []
+}
+
 variable "strict_required_status_checks_policy" {
   description = "Whether the branch must be up to date before merging."
   type        = bool

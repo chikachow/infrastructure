@@ -6,7 +6,7 @@ variable "repository" {
 variable "name" {
   description = "Ruleset name."
   type        = string
-  default     = "protect default branch"
+  default     = "Protect default branch"
 }
 
 variable "enforcement" {
@@ -18,6 +18,16 @@ variable "enforcement" {
     condition     = contains(["active", "disabled", "evaluate"], var.enforcement)
     error_message = "enforcement must be one of: active, disabled, evaluate."
   }
+}
+
+variable "bypass_actors" {
+  description = "Ruleset bypass actors."
+  type = list(object({
+    actor_id    = number
+    actor_type  = string
+    bypass_mode = string
+  }))
+  default = []
 }
 
 variable "ref_include" {
