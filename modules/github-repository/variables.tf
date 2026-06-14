@@ -109,9 +109,9 @@ variable "allow_update_branch" {
 }
 
 variable "allow_forking" {
-  description = "Whether repositories allow forking."
+  description = "Whether repositories allow forking. Set to null to leave the setting unmanaged, which is required for private repositories in organizations that disable private repository forking."
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "delete_branch_on_merge" {
