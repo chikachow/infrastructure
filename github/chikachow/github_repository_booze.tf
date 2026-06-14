@@ -4,7 +4,8 @@ module "booze_repository" {
   name       = "booze"
   visibility = "public"
 
-  has_issues = true
+  has_issues    = true
+  allow_forking = true
 }
 
 module "booze_ruleset_protect_default_branch" {
