@@ -44,7 +44,7 @@ variable "topics" {
 }
 
 variable "default_branch" {
-  description = "Default branch to manage."
+  description = "Default branch to manage. Set to null for newly-created empty repositories until their first branch has been pushed."
   type        = string
   default     = "main"
 }
