@@ -145,10 +145,9 @@ variable "squash_merge_commit_title" {
 }
 
 variable "security_and_analysis" {
-  description = "Repository security_and_analysis settings. Public repositories default code security, secret scanning, and push protection to enabled. Private and internal repositories leave those settings unmanaged unless advanced_security or the specific setting is explicitly configured."
+  description = "Repository security_and_analysis settings. Public repositories default secret scanning and push protection to enabled. Private and internal repositories leave those settings unmanaged unless advanced_security or the specific setting is explicitly configured."
   type = object({
     advanced_security                     = optional(bool)
-    code_security                         = optional(bool)
     secret_scanning                       = optional(bool)
     secret_scanning_ai_detection          = optional(bool)
     secret_scanning_non_provider_patterns = optional(bool)

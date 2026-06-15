@@ -7,7 +7,6 @@ locals {
   )
   effective_security_and_analysis = {
     advanced_security                     = var.security_and_analysis.advanced_security
-    code_security                         = var.security_and_analysis.code_security != null ? var.security_and_analysis.code_security : local.default_security_and_analysis_enabled
     secret_scanning                       = local.effective_secret_scanning
     secret_scanning_ai_detection          = var.security_and_analysis.secret_scanning_ai_detection
     secret_scanning_non_provider_patterns = var.security_and_analysis.secret_scanning_non_provider_patterns
@@ -66,13 +65,10 @@ resource "github_repository" "this" {
         }
       }
 
-      dynamic "code_security" {
-        for_each = local.effective_security_and_analysis.code_security == null ? [] : [local.effective_security_and_analysis.code_security]
-
-        content {
-          status = code_security.value ? "enabled" : "disabled"
-        }
-      }
+      # code_security is not managed because provider v6.12.1 has schema only;
+      # read/write support is tracked in:
+      # https://github.com/integrations/terraform-provider-github/issues/2963
+      # https://github.com/integrations/terraform-provider-github/pull/3431
 
       dynamic "secret_scanning" {
         for_each = local.effective_security_and_analysis.secret_scanning == null ? [] : [local.effective_security_and_analysis.secret_scanning]
