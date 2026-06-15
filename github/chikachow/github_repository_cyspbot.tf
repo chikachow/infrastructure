@@ -3,8 +3,6 @@ module "cyspbot_repository" {
 
   name       = "cyspbot"
   visibility = "public"
-
-  allow_auto_merge = false
 }
 
 module "cyspbot_ruleset_protect_default_branch" {
