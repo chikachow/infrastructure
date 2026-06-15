@@ -6,7 +6,6 @@ module "cyspbot_deploy_repository" {
   visibility  = "private"
 
   allow_auto_merge = false
-  allow_forking    = null
   default_branch   = null
 }
 
