@@ -1,6 +1,6 @@
 provider "github" {
-  owner             = local.github_owner
-  parallel_requests = true
+  owner         = local.github_owner
+  legacy_client = false
 
   dynamic "app_auth" {
     for_each = local.terraform_github_app_auth_enabled ? [true] : []
