@@ -5,7 +5,7 @@ module "atlantis_deploy_repository" {
   description = "Fly.io deployment pipeline for chikachow Atlantis"
   visibility  = "private"
 
-  allow_auto_merge = true
+  allow_auto_merge = false
   default_branch   = null
 }
 
