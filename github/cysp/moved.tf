@@ -47,3 +47,43 @@ moved {
   from = github_actions_variable.terraform_provider_contentful_cyspbot_app_id
   to   = github_actions_variable.terraform_provider_contentful["CYSPBOT_APP_ID"]
 }
+
+moved {
+  from = module.graphql_schema_registry_ruleset_require_generated_code
+  to   = module.graphql_schema_registry_status_rulesets["require_generated_code"]
+}
+
+moved {
+  from = module.graphql_schema_registry_ruleset_require_passing_tests
+  to   = module.graphql_schema_registry_status_rulesets["require_passing_tests"]
+}
+
+moved {
+  from = module.terraform_provider_censusworkspace_ruleset_require_clean_linting
+  to   = module.terraform_provider_censusworkspace_status_rulesets["require_clean_linting"]
+}
+
+moved {
+  from = module.terraform_provider_censusworkspace_ruleset_require_passing_tests
+  to   = module.terraform_provider_censusworkspace_status_rulesets["require_passing_tests"]
+}
+
+moved {
+  from = module.terraform_provider_censusworkspace_ruleset_require_test_coverage
+  to   = module.terraform_provider_censusworkspace_status_rulesets["require_test_coverage"]
+}
+
+moved {
+  from = module.terraform_provider_contentful_ruleset_require_lint
+  to   = module.terraform_provider_contentful_status_rulesets["require_lint"]
+}
+
+moved {
+  from = module.terraform_provider_contentful_ruleset_require_passing_tests
+  to   = module.terraform_provider_contentful_status_rulesets["require_passing_tests"]
+}
+
+moved {
+  from = module.terraform_provider_contentful_ruleset_require_test_coverage
+  to   = module.terraform_provider_contentful_status_rulesets["require_test_coverage"]
+}

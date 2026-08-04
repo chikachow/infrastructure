@@ -19,13 +19,7 @@ module "terraform_provider_braze_ruleset_require_passing_tests" {
   repository = module.terraform_provider_braze_repository.name
   name       = "Require passing tests"
 
-  bypass_actors = [
-    {
-      actor_id    = local.github_repository_role_admin_id
-      actor_type  = "RepositoryRole"
-      bypass_mode = "pull_request"
-    },
-  ]
+  bypass_actors = [local.github_repository_role_admin_pull_request_bypass_actor]
 
   required_status_checks = {
     test               = local.github_actions_integration_id

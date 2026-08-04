@@ -97,3 +97,13 @@ moved {
   from = module.cloudflare_workload_identity_deploy_repository.module.repository.github_repository.this
   to   = module.cloudflare_workload_identity_deploy_repository.github_repository.this
 }
+
+moved {
+  from = module.infrastructure_ruleset_tflint
+  to   = module.infrastructure_status_rulesets["tflint"]
+}
+
+moved {
+  from = module.infrastructure_ruleset_atlantis_apply
+  to   = module.infrastructure_status_rulesets["atlantis_apply"]
+}

@@ -11,24 +11,27 @@ module "infrastructure_ruleset_protect_default_branch" {
   repository = module.infrastructure_repository.name
 }
 
-module "infrastructure_ruleset_tflint" {
+module "infrastructure_status_rulesets" {
+  for_each = {
+    tflint = {
+      name = "tflint"
+      required_status_checks = {
+        tflint = local.github_actions_integration_id
+      }
+    }
+    atlantis_apply = {
+      name = "atlantis/apply"
+      required_status_checks = {
+        "atlantis/apply" = local.atlantis_integration_id
+      }
+    }
+  }
+
   source = "../../modules/github-repository-ruleset-required-status-checks"
 
   repository = module.infrastructure_repository.name
-  name       = "tflint"
+  name       = each.value.name
 
-  required_status_checks = {
-    tflint = local.github_actions_integration_id
-  }
-}
-
-module "infrastructure_ruleset_atlantis_apply" {
-  source = "../../modules/github-repository-ruleset-required-status-checks"
-
-  repository = module.infrastructure_repository.name
-  name       = "atlantis/apply"
-
-  required_status_checks = {
-    "atlantis/apply" = local.atlantis_integration_id
-  }
+  bypass_actors          = try(each.value.bypass_actors, [])
+  required_status_checks = each.value.required_status_checks
 }

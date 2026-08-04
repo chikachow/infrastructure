@@ -10,13 +10,7 @@ module "graphql_schema_registry_ruleset_protect_default_branch" {
 
   repository = module.graphql_schema_registry_repository.name
 
-  bypass_actors = [
-    {
-      actor_id    = local.github_repository_role_admin_id
-      actor_type  = "RepositoryRole"
-      bypass_mode = "always"
-    },
-  ]
+  bypass_actors = [local.github_repository_role_admin_always_bypass_actor]
 }
 
 resource "github_repository_ruleset" "graphql_schema_registry_require_pull_request" {
@@ -65,29 +59,32 @@ resource "github_repository_ruleset" "graphql_schema_registry_require_pull_reque
   }
 }
 
-module "graphql_schema_registry_ruleset_require_generated_code" {
+module "graphql_schema_registry_status_rulesets" {
+  for_each = {
+    require_generated_code = {
+      name = "Require generated code"
+      required_status_checks = {
+        "fastify-openapi-generated / fastify-openapi-generated" = local.github_actions_integration_id
+        "drizzle-schema / drizzle-schema"                       = local.github_actions_integration_id
+      }
+    }
+    require_passing_tests = {
+      name = "Require passing tests"
+      required_status_checks = {
+        "test / unit"           = local.github_actions_integration_id
+        "test / integration"    = local.github_actions_integration_id
+        "neon / pgschema-apply" = local.github_actions_integration_id
+      }
+    }
+  }
+
   source = "../../modules/github-repository-ruleset-required-status-checks"
 
   repository = module.graphql_schema_registry_repository.name
-  name       = "Require generated code"
+  name       = each.value.name
 
-  required_status_checks = {
-    "fastify-openapi-generated / fastify-openapi-generated" = local.github_actions_integration_id
-    "drizzle-schema / drizzle-schema"                       = local.github_actions_integration_id
-  }
-}
-
-module "graphql_schema_registry_ruleset_require_passing_tests" {
-  source = "../../modules/github-repository-ruleset-required-status-checks"
-
-  repository = module.graphql_schema_registry_repository.name
-  name       = "Require passing tests"
-
-  required_status_checks = {
-    "test / unit"           = local.github_actions_integration_id
-    "test / integration"    = local.github_actions_integration_id
-    "neon / pgschema-apply" = local.github_actions_integration_id
-  }
+  bypass_actors          = try(each.value.bypass_actors, [])
+  required_status_checks = each.value.required_status_checks
 }
 
 resource "github_actions_variable" "graphql_schema_registry" {

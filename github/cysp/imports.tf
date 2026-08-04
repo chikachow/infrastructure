@@ -29,12 +29,12 @@ import {
 }
 
 import {
-  to = module.graphql_schema_registry_ruleset_require_generated_code.github_repository_ruleset.this
+  to = module.graphql_schema_registry_status_rulesets["require_generated_code"].github_repository_ruleset.this
   id = "graphql-schema-registry:14007291"
 }
 
 import {
-  to = module.graphql_schema_registry_ruleset_require_passing_tests.github_repository_ruleset.this
+  to = module.graphql_schema_registry_status_rulesets["require_passing_tests"].github_repository_ruleset.this
   id = "graphql-schema-registry:12998575"
 }
 
@@ -129,17 +129,17 @@ import {
 }
 
 import {
-  to = module.terraform_provider_censusworkspace_ruleset_require_clean_linting.github_repository_ruleset.this
+  to = module.terraform_provider_censusworkspace_status_rulesets["require_clean_linting"].github_repository_ruleset.this
   id = "terraform-provider-censusworkspace:7775178"
 }
 
 import {
-  to = module.terraform_provider_censusworkspace_ruleset_require_passing_tests.github_repository_ruleset.this
+  to = module.terraform_provider_censusworkspace_status_rulesets["require_passing_tests"].github_repository_ruleset.this
   id = "terraform-provider-censusworkspace:7143497"
 }
 
 import {
-  to = module.terraform_provider_censusworkspace_ruleset_require_test_coverage.github_repository_ruleset.this
+  to = module.terraform_provider_censusworkspace_status_rulesets["require_test_coverage"].github_repository_ruleset.this
   id = "terraform-provider-censusworkspace:7143501"
 }
 
@@ -174,17 +174,17 @@ import {
 }
 
 import {
-  to = module.terraform_provider_contentful_ruleset_require_lint.github_repository_ruleset.this
+  to = module.terraform_provider_contentful_status_rulesets["require_lint"].github_repository_ruleset.this
   id = "terraform-provider-contentful:11556039"
 }
 
 import {
-  to = module.terraform_provider_contentful_ruleset_require_passing_tests.github_repository_ruleset.this
+  to = module.terraform_provider_contentful_status_rulesets["require_passing_tests"].github_repository_ruleset.this
   id = "terraform-provider-contentful:1109337"
 }
 
 import {
-  to = module.terraform_provider_contentful_ruleset_require_test_coverage.github_repository_ruleset.this
+  to = module.terraform_provider_contentful_status_rulesets["require_test_coverage"].github_repository_ruleset.this
   id = "terraform-provider-contentful:1109338"
 }
 
