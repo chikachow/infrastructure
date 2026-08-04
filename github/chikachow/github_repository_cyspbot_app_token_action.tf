@@ -31,16 +31,10 @@ module "cyspbot_app_token_action_ruleset_required_status_checks" {
   repository = module.cyspbot_app_token_action_repository.name
   name       = "Require status checks"
 
-  required_status_checks = [
-    {
-      context        = "check"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "actionlint"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    check      = local.github_actions_integration_id
+    actionlint = local.github_actions_integration_id
+  }
 }
 
 module "cyspbot_app_token_action_ruleset_require_codeql" {

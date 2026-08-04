@@ -71,16 +71,10 @@ module "graphql_schema_registry_ruleset_require_generated_code" {
   repository = module.graphql_schema_registry_repository.name
   name       = "Require generated code"
 
-  required_status_checks = [
-    {
-      context        = "fastify-openapi-generated / fastify-openapi-generated"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "drizzle-schema / drizzle-schema"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    "fastify-openapi-generated / fastify-openapi-generated" = local.github_actions_integration_id
+    "drizzle-schema / drizzle-schema"                       = local.github_actions_integration_id
+  }
 }
 
 module "graphql_schema_registry_ruleset_require_passing_tests" {
@@ -89,20 +83,11 @@ module "graphql_schema_registry_ruleset_require_passing_tests" {
   repository = module.graphql_schema_registry_repository.name
   name       = "Require passing tests"
 
-  required_status_checks = [
-    {
-      context        = "test / unit"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "test / integration"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "neon / pgschema-apply"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    "test / unit"           = local.github_actions_integration_id
+    "test / integration"    = local.github_actions_integration_id
+    "neon / pgschema-apply" = local.github_actions_integration_id
+  }
 }
 
 resource "github_actions_variable" "graphql_schema_registry_cyspbot_app_id" {
