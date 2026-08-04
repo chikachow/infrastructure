@@ -14,65 +14,48 @@ module "terraform_provider_contentful_ruleset_protect_default_branch" {
   repository = module.terraform_provider_contentful_repository.name
 }
 
-module "terraform_provider_contentful_ruleset_require_lint" {
+module "terraform_provider_contentful_status_rulesets" {
+  for_each = {
+    require_lint = {
+      name = "Require lint"
+      bypass_actors = [
+        local.github_repository_role_maintain_pull_request_bypass_actor,
+      ]
+      required_status_checks = {
+        lint = local.github_actions_integration_id
+      }
+    }
+    require_passing_tests = {
+      name = "Require passing tests"
+      bypass_actors = [
+        local.github_repository_role_maintain_always_bypass_actor,
+      ]
+      required_status_checks = {
+        "testaccmocked (1.14.*)"      = local.github_actions_integration_id
+        "testacc (1.14.*)"            = local.github_actions_integration_id
+        "testaccmocked (1.13.*)"      = local.github_actions_integration_id
+        test                          = local.github_actions_integration_id
+        contentful-management-go-test = local.github_actions_integration_id
+      }
+    }
+    require_test_coverage = {
+      name = "Require test coverage"
+      bypass_actors = [
+        local.github_repository_role_maintain_always_bypass_actor,
+      ]
+      required_status_checks = {
+        "codecov/project" = local.codecov_integration_id
+      }
+    }
+  }
+
   source = "../../modules/github-repository-ruleset-required-status-checks"
 
   repository = module.terraform_provider_contentful_repository.name
-  name       = "Require lint"
+  name       = each.value.name
 
-  bypass_actors = [
-    {
-      actor_id    = local.github_repository_role_maintain_id
-      actor_type  = "RepositoryRole"
-      bypass_mode = "pull_request"
-    },
-  ]
-
-  required_status_checks = {
-    lint = local.github_actions_integration_id
-  }
-}
-
-module "terraform_provider_contentful_ruleset_require_passing_tests" {
-  source = "../../modules/github-repository-ruleset-required-status-checks"
-
-  repository = module.terraform_provider_contentful_repository.name
-  name       = "Require passing tests"
-
-  bypass_actors = [
-    {
-      actor_id    = local.github_repository_role_maintain_id
-      actor_type  = "RepositoryRole"
-      bypass_mode = "always"
-    },
-  ]
-
-  required_status_checks = {
-    "testaccmocked (1.14.*)"      = local.github_actions_integration_id
-    "testacc (1.14.*)"            = local.github_actions_integration_id
-    "testaccmocked (1.13.*)"      = local.github_actions_integration_id
-    test                          = local.github_actions_integration_id
-    contentful-management-go-test = local.github_actions_integration_id
-  }
-}
-
-module "terraform_provider_contentful_ruleset_require_test_coverage" {
-  source = "../../modules/github-repository-ruleset-required-status-checks"
-
-  repository = module.terraform_provider_contentful_repository.name
-  name       = "Require test coverage"
-
-  bypass_actors = [
-    {
-      actor_id    = local.github_repository_role_maintain_id
-      actor_type  = "RepositoryRole"
-      bypass_mode = "always"
-    },
-  ]
-
-  required_status_checks = {
-    "codecov/project" = local.codecov_integration_id
-  }
+  bypass_actors          = try(each.value.bypass_actors, [])
+  required_status_checks = each.value.required_status_checks
 }
 
 module "terraform_provider_contentful_ruleset_require_codeql" {
