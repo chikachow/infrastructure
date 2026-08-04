@@ -52,3 +52,48 @@ moved {
   from = github_repository_vulnerability_alerts.booze
   to   = module.booze_repository.github_repository_vulnerability_alerts.this[0]
 }
+
+moved {
+  from = module.cloudflare_workload_identity_issuer_ruleset_protect_default_branch
+  to   = module.cloudflare_workload_identity_ruleset_protect_default_branch
+}
+
+moved {
+  from = module.cloudflare_workload_identity_issuer_ruleset_ci
+  to   = module.cloudflare_workload_identity_ruleset_ci
+}
+
+moved {
+  from = module.cloudflare_workload_identity_issuer_ruleset_require_codeql
+  to   = module.cloudflare_workload_identity_ruleset_require_codeql
+}
+
+moved {
+  from = github_repository_environment.cloudflare_workload_identity_issuer_production
+  to   = github_repository_environment.cloudflare_workload_identity_production
+}
+
+moved {
+  from = github_repository_environment.cloudflare_workload_identity_issuer_deploy_production
+  to   = github_repository_environment.cloudflare_workload_identity_deploy_production
+}
+
+moved {
+  from = module.cloudflare_workload_identity_issuer_repository.github_repository.this
+  to   = module.cloudflare_workload_identity_repository.module.repository.github_repository.this
+}
+
+moved {
+  from = module.cloudflare_workload_identity_repository.module.repository.github_repository.this
+  to   = module.cloudflare_workload_identity_repository.github_repository.this
+}
+
+moved {
+  from = module.cloudflare_workload_identity_issuer_deploy_repository.github_repository.this
+  to   = module.cloudflare_workload_identity_deploy_repository.module.repository.github_repository.this
+}
+
+moved {
+  from = module.cloudflare_workload_identity_deploy_repository.module.repository.github_repository.this
+  to   = module.cloudflare_workload_identity_deploy_repository.github_repository.this
+}

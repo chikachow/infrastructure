@@ -117,7 +117,7 @@ resource "github_branch_default" "this" {
 }
 
 resource "github_repository_dependabot_security_updates" "this" {
-  count = 1
+  count = var.dependabot_security_updates_enabled == null ? 0 : 1
 
   repository = github_repository.this.name
   enabled    = var.dependabot_security_updates_enabled
@@ -126,7 +126,7 @@ resource "github_repository_dependabot_security_updates" "this" {
 }
 
 resource "github_repository_vulnerability_alerts" "this" {
-  count = 1
+  count = var.vulnerability_alerts_enabled == null ? 0 : 1
 
   repository = github_repository.this.name
   enabled    = var.vulnerability_alerts_enabled

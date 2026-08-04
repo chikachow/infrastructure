@@ -166,13 +166,15 @@ variable "security_and_analysis" {
 }
 
 variable "dependabot_security_updates_enabled" {
-  description = "Whether repositories have Dependabot security updates enabled."
+  description = "Whether repositories have Dependabot security updates enabled. Set to null to leave the organization security configuration authoritative."
   type        = bool
   default     = true
+  nullable    = true
 }
 
 variable "vulnerability_alerts_enabled" {
-  description = "Whether repositories have vulnerability alerts enabled."
+  description = "Whether repositories have vulnerability alerts enabled. Set to null to leave the organization security configuration authoritative."
   type        = bool
   default     = true
+  nullable    = true
 }
