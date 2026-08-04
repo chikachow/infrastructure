@@ -43,6 +43,12 @@ variable "strict_required_status_checks_policy" {
   default     = false
 }
 
+variable "do_not_enforce_on_create" {
+  description = "Whether required status checks should be skipped when a matching branch is created."
+  type        = bool
+  default     = true
+}
+
 variable "ref_include" {
   description = "Ref name include patterns."
   type        = list(string)
