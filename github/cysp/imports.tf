@@ -39,32 +39,32 @@ import {
 }
 
 import {
-  to = github_actions_variable.graphql_schema_registry_cyspbot_app_id
+  to = github_actions_variable.graphql_schema_registry["CYSPBOT_APP_ID"]
   id = "graphql-schema-registry:CYSPBOT_APP_ID"
 }
 
 import {
-  to = github_actions_variable.graphql_schema_registry_neon_database_name
+  to = github_actions_variable.graphql_schema_registry["NEON_DATABASE_NAME"]
   id = "graphql-schema-registry:NEON_DATABASE_NAME"
 }
 
 import {
-  to = github_actions_variable.graphql_schema_registry_neon_host
+  to = github_actions_variable.graphql_schema_registry["NEON_HOST"]
   id = "graphql-schema-registry:NEON_HOST"
 }
 
 import {
-  to = github_actions_variable.graphql_schema_registry_neon_parent_branch
+  to = github_actions_variable.graphql_schema_registry["NEON_PARENT_BRANCH"]
   id = "graphql-schema-registry:NEON_PARENT_BRANCH"
 }
 
 import {
-  to = github_actions_variable.graphql_schema_registry_neon_project_id
+  to = github_actions_variable.graphql_schema_registry["NEON_PROJECT_ID"]
   id = "graphql-schema-registry:NEON_PROJECT_ID"
 }
 
 import {
-  to = github_actions_variable.graphql_schema_registry_neon_role_name
+  to = github_actions_variable.graphql_schema_registry["NEON_ROLE_NAME"]
   id = "graphql-schema-registry:NEON_ROLE_NAME"
 }
 
@@ -189,22 +189,22 @@ import {
 }
 
 import {
-  to = github_actions_variable.terraform_provider_contentful_contentful_environment_id
+  to = github_actions_variable.terraform_provider_contentful["CONTENTFUL_ENVIRONMENT_ID"]
   id = "terraform-provider-contentful:CONTENTFUL_ENVIRONMENT_ID"
 }
 
 import {
-  to = github_actions_variable.terraform_provider_contentful_contentful_organization_id
+  to = github_actions_variable.terraform_provider_contentful["CONTENTFUL_ORGANIZATION_ID"]
   id = "terraform-provider-contentful:CONTENTFUL_ORGANIZATION_ID"
 }
 
 import {
-  to = github_actions_variable.terraform_provider_contentful_contentful_space_id
+  to = github_actions_variable.terraform_provider_contentful["CONTENTFUL_SPACE_ID"]
   id = "terraform-provider-contentful:CONTENTFUL_SPACE_ID"
 }
 
 import {
-  to = github_actions_variable.terraform_provider_contentful_cyspbot_app_id
+  to = github_actions_variable.terraform_provider_contentful["CYSPBOT_APP_ID"]
   id = "terraform-provider-contentful:CYSPBOT_APP_ID"
 }
 

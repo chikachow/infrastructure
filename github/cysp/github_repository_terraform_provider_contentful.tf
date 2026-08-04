@@ -81,26 +81,15 @@ module "terraform_provider_contentful_ruleset_require_codeql" {
   repository = module.terraform_provider_contentful_repository.name
 }
 
-resource "github_actions_variable" "terraform_provider_contentful_contentful_environment_id" {
-  repository    = module.terraform_provider_contentful_repository.name
-  variable_name = "CONTENTFUL_ENVIRONMENT_ID"
-  value         = "master"
-}
+resource "github_actions_variable" "terraform_provider_contentful" {
+  for_each = {
+    CONTENTFUL_ENVIRONMENT_ID  = "master"
+    CONTENTFUL_ORGANIZATION_ID = "2zuSjSO4A0e6GKBrhJRe2m"
+    CONTENTFUL_SPACE_ID        = "0p38pssr0fi3"
+    CYSPBOT_APP_ID             = local.cyspbot_github_app_id
+  }
 
-resource "github_actions_variable" "terraform_provider_contentful_contentful_organization_id" {
   repository    = module.terraform_provider_contentful_repository.name
-  variable_name = "CONTENTFUL_ORGANIZATION_ID"
-  value         = "2zuSjSO4A0e6GKBrhJRe2m"
-}
-
-resource "github_actions_variable" "terraform_provider_contentful_contentful_space_id" {
-  repository    = module.terraform_provider_contentful_repository.name
-  variable_name = "CONTENTFUL_SPACE_ID"
-  value         = "0p38pssr0fi3"
-}
-
-resource "github_actions_variable" "terraform_provider_contentful_cyspbot_app_id" {
-  repository    = module.terraform_provider_contentful_repository.name
-  variable_name = "CYSPBOT_APP_ID"
-  value         = local.cyspbot_github_app_id
+  variable_name = each.key
+  value         = each.value
 }

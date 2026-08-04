@@ -90,38 +90,17 @@ module "graphql_schema_registry_ruleset_require_passing_tests" {
   }
 }
 
-resource "github_actions_variable" "graphql_schema_registry_cyspbot_app_id" {
-  repository    = module.graphql_schema_registry_repository.name
-  variable_name = "CYSPBOT_APP_ID"
-  value         = local.cyspbot_github_app_id
-}
+resource "github_actions_variable" "graphql_schema_registry" {
+  for_each = {
+    CYSPBOT_APP_ID     = local.cyspbot_github_app_id
+    NEON_DATABASE_NAME = "graphql_schema_registry"
+    NEON_HOST          = "ep-frosty-heart-a7w2yndv.ap-southeast-2.aws.neon.tech"
+    NEON_PARENT_BRANCH = "production"
+    NEON_PROJECT_ID    = "quiet-pine-85242794"
+    NEON_ROLE_NAME     = "graphql_schema_registry_owner"
+  }
 
-resource "github_actions_variable" "graphql_schema_registry_neon_database_name" {
   repository    = module.graphql_schema_registry_repository.name
-  variable_name = "NEON_DATABASE_NAME"
-  value         = "graphql_schema_registry"
-}
-
-resource "github_actions_variable" "graphql_schema_registry_neon_host" {
-  repository    = module.graphql_schema_registry_repository.name
-  variable_name = "NEON_HOST"
-  value         = "ep-frosty-heart-a7w2yndv.ap-southeast-2.aws.neon.tech"
-}
-
-resource "github_actions_variable" "graphql_schema_registry_neon_parent_branch" {
-  repository    = module.graphql_schema_registry_repository.name
-  variable_name = "NEON_PARENT_BRANCH"
-  value         = "production"
-}
-
-resource "github_actions_variable" "graphql_schema_registry_neon_project_id" {
-  repository    = module.graphql_schema_registry_repository.name
-  variable_name = "NEON_PROJECT_ID"
-  value         = "quiet-pine-85242794"
-}
-
-resource "github_actions_variable" "graphql_schema_registry_neon_role_name" {
-  repository    = module.graphql_schema_registry_repository.name
-  variable_name = "NEON_ROLE_NAME"
-  value         = "graphql_schema_registry_owner"
+  variable_name = each.key
+  value         = each.value
 }
