@@ -26,6 +26,7 @@ resource "github_repository_ruleset" "this" {
   rules {
     required_status_checks {
       strict_required_status_checks_policy = var.strict_required_status_checks_policy
+      do_not_enforce_on_create             = var.do_not_enforce_on_create
 
       dynamic "required_check" {
         for_each = var.required_status_checks
