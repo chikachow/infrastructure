@@ -121,6 +121,8 @@ resource "github_repository_dependabot_security_updates" "this" {
 
   repository = github_repository.this.name
   enabled    = var.dependabot_security_updates_enabled
+
+  depends_on = [github_repository_vulnerability_alerts.this]
 }
 
 resource "github_repository_vulnerability_alerts" "this" {
