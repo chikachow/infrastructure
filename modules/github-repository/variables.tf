@@ -17,7 +17,6 @@ variable "lifecycle_state" {
 variable "visibility" {
   description = "Repository visibility."
   type        = string
-  default     = "private"
 
   validation {
     condition     = contains(["private", "public", "internal"], var.visibility)
