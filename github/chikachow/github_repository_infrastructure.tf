@@ -17,12 +17,9 @@ module "infrastructure_ruleset_tflint" {
   repository = module.infrastructure_repository.name
   name       = "tflint"
 
-  required_status_checks = [
-    {
-      context        = "tflint"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    tflint = local.github_actions_integration_id
+  }
 }
 
 module "infrastructure_ruleset_atlantis_apply" {
@@ -31,10 +28,7 @@ module "infrastructure_ruleset_atlantis_apply" {
   repository = module.infrastructure_repository.name
   name       = "atlantis/apply"
 
-  required_status_checks = [
-    {
-      context        = "atlantis/apply"
-      integration_id = local.atlantis_integration_id
-    },
-  ]
+  required_status_checks = {
+    "atlantis/apply" = local.atlantis_integration_id
+  }
 }

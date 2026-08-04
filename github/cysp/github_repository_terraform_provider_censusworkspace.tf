@@ -27,12 +27,9 @@ module "terraform_provider_censusworkspace_ruleset_require_clean_linting" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "lint"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    lint = local.github_actions_integration_id
+  }
 }
 
 module "terraform_provider_censusworkspace_ruleset_require_passing_tests" {
@@ -49,12 +46,9 @@ module "terraform_provider_censusworkspace_ruleset_require_passing_tests" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "test"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    test = local.github_actions_integration_id
+  }
 }
 
 module "terraform_provider_censusworkspace_ruleset_require_test_coverage" {
@@ -71,12 +65,9 @@ module "terraform_provider_censusworkspace_ruleset_require_test_coverage" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "codecov/project"
-      integration_id = local.codecov_integration_id
-    },
-  ]
+  required_status_checks = {
+    "codecov/project" = local.codecov_integration_id
+  }
 }
 
 module "terraform_provider_censusworkspace_ruleset_require_codeql" {

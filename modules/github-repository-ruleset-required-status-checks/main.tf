@@ -32,8 +32,8 @@ resource "github_repository_ruleset" "this" {
         for_each = var.required_status_checks
 
         content {
-          context        = required_check.value.context
-          integration_id = required_check.value.integration_id
+          context        = required_check.key
+          integration_id = required_check.value
         }
       }
     }

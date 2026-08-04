@@ -27,20 +27,11 @@ module "terraform_provider_braze_ruleset_require_passing_tests" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "test"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "testacc (1.13.*)"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "testacc (1.14.*)"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    test               = local.github_actions_integration_id
+    "testacc (1.13.*)" = local.github_actions_integration_id
+    "testacc (1.14.*)" = local.github_actions_integration_id
+  }
 }
 
 module "terraform_provider_braze_ruleset_require_codeql" {

@@ -28,12 +28,9 @@ module "terraform_provider_contentful_ruleset_require_lint" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "lint"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    lint = local.github_actions_integration_id
+  }
 }
 
 module "terraform_provider_contentful_ruleset_require_passing_tests" {
@@ -50,28 +47,13 @@ module "terraform_provider_contentful_ruleset_require_passing_tests" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "testaccmocked (1.14.*)"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "testacc (1.14.*)"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "testaccmocked (1.13.*)"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "test"
-      integration_id = local.github_actions_integration_id
-    },
-    {
-      context        = "contentful-management-go-test"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    "testaccmocked (1.14.*)"      = local.github_actions_integration_id
+    "testacc (1.14.*)"            = local.github_actions_integration_id
+    "testaccmocked (1.13.*)"      = local.github_actions_integration_id
+    test                          = local.github_actions_integration_id
+    contentful-management-go-test = local.github_actions_integration_id
+  }
 }
 
 module "terraform_provider_contentful_ruleset_require_test_coverage" {
@@ -88,12 +70,9 @@ module "terraform_provider_contentful_ruleset_require_test_coverage" {
     },
   ]
 
-  required_status_checks = [
-    {
-      context        = "codecov/project"
-      integration_id = local.codecov_integration_id
-    },
-  ]
+  required_status_checks = {
+    "codecov/project" = local.codecov_integration_id
+  }
 }
 
 module "terraform_provider_contentful_ruleset_require_codeql" {

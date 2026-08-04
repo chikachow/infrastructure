@@ -21,12 +21,9 @@ module "cloudflare_workload_identity_ruleset_ci" {
   repository = module.cloudflare_workload_identity_repository.name
   name       = "ci"
 
-  required_status_checks = [
-    {
-      context        = "ci"
-      integration_id = local.github_actions_integration_id
-    },
-  ]
+  required_status_checks = {
+    ci = local.github_actions_integration_id
+  }
 }
 
 module "cloudflare_workload_identity_ruleset_require_codeql" {
