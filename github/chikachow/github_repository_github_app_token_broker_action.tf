@@ -44,4 +44,8 @@ module "github_app_token_broker_action_ruleset_require_codeql" {
   source = "../../modules/github-repository-ruleset-require-codeql"
 
   repository = module.github_app_token_broker_action_repository.name
+
+  # Default setup cannot detect supported languages until source reaches main.
+  # Restore active enforcement after the first default-setup analysis succeeds.
+  enforcement = "evaluate"
 }
