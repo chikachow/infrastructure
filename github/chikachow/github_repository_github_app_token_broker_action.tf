@@ -9,11 +9,6 @@ module "github_app_token_broker_action_repository" {
 
   has_issues    = true
   allow_forking = true
-
-  # Preserve the organization/public-repository defaults during the empty
-  # repository bootstrap; these can be made explicit after the first commit.
-  dependabot_security_updates_enabled = null
-  vulnerability_alerts_enabled        = null
 }
 
 module "github_app_token_broker_action_ruleset_protect_default_branch" {
