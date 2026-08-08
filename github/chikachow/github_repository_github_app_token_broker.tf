@@ -3,7 +3,7 @@ module "github_app_token_broker_repository" {
 
   name           = "github-app-token-broker"
   visibility     = "public"
-  default_branch = null
+  default_branch = "main"
 
   dependabot_security_updates_enabled = null
   vulnerability_alerts_enabled        = null
