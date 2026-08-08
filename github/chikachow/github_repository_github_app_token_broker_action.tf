@@ -5,9 +5,7 @@ module "github_app_token_broker_action_repository" {
   description = "GitHub Action client for the GitHub App token broker"
   visibility  = "public"
 
-  # The action-content task must seed the first main commit before Terraform
-  # manages the repository's default branch and branch governance.
-  default_branch = null
+  default_branch = "main"
 
   has_issues    = true
   allow_forking = true
