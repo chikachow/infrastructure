@@ -7,6 +7,8 @@ module "github_app_token_broker_action_repository" {
 
   default_branch = "main"
 
+  lifecycle_state = "retiring"
+
   has_issues    = true
   allow_forking = true
 }

@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "lifecycle_state" {
-  description = "Repository lifecycle state. Active and retiring repositories keep the same configured repository settings; archived repositories keep those settings and set archived."
+  description = "Repository lifecycle state. Active repositories archive on destroy, retiring repositories remain unarchived but delete on destroy, and archived repositories remain managed and archived."
   type        = string
   default     = "active"
 
