@@ -42,7 +42,7 @@ resource "github_repository" "this" {
 
   allow_update_branch         = var.allow_update_branch
   allow_forking               = var.allow_forking
-  archive_on_destroy          = true
+  archive_on_destroy          = var.lifecycle_state != "retiring"
   delete_branch_on_merge      = var.delete_branch_on_merge
   is_template                 = false
   web_commit_signoff_required = false

@@ -14,6 +14,11 @@ run "private_active_defaults" {
   }
 
   assert {
+    condition     = github_repository.this.archive_on_destroy
+    error_message = "An active repository must archive on destroy by default."
+  }
+
+  assert {
     condition     = length(github_repository.this.security_and_analysis) == 0
     error_message = "A private repository must leave security_and_analysis unmanaged by default."
   }
@@ -80,6 +85,21 @@ run "archived_repository" {
   assert {
     condition     = github_repository.this.archived
     error_message = "An archived lifecycle state must archive the repository."
+  }
+}
+
+run "retiring_repository" {
+  command = plan
+
+  variables {
+    name            = "retiring-repository"
+    visibility      = "private"
+    lifecycle_state = "retiring"
+  }
+
+  assert {
+    condition     = !github_repository.this.archived && !github_repository.this.archive_on_destroy
+    error_message = "A retiring repository must remain unarchived and delete instead of archive on destroy."
   }
 }
 
