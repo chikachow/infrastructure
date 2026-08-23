@@ -6,8 +6,10 @@ projects:
       when_modified:
         - "*.tf*"
         - ".terraform.lock.hcl"
+        - "../../atlantis.yaml"
   - dir: github/cysp
     autoplan:
       when_modified:
         - "*.tf*"
         - ".terraform.lock.hcl"
+        - "../../atlantis.yaml"
