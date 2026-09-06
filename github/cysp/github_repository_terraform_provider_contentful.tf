@@ -31,9 +31,9 @@ module "terraform_provider_contentful_status_rulesets" {
         local.github_repository_role_maintain_always_bypass_actor,
       ]
       required_status_checks = {
-        "testaccmocked (1.14.*)"      = local.github_actions_integration_id
-        "testacc (1.14.*)"            = local.github_actions_integration_id
-        "testaccmocked (1.13.*)"      = local.github_actions_integration_id
+        "testaccmocked (1.16.*)"      = local.github_actions_integration_id
+        "testacc (1.16.*)"            = local.github_actions_integration_id
+        "testaccmocked (1.15.*)"      = local.github_actions_integration_id
         test                          = local.github_actions_integration_id
         contentful-management-go-test = local.github_actions_integration_id
       }
