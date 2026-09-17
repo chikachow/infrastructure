@@ -6,5 +6,4 @@ module "perfumery_repository" {
   visibility  = "private"
 
   allow_auto_merge = false
-  default_branch   = null
 }
