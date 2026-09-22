@@ -54,12 +54,7 @@ resource "github_repository_ruleset" "terraform_provider_typesense_main" {
       }
 
       required_check {
-        context        = "testacc (1.14.*)"
-        integration_id = local.github_actions_integration_id
-      }
-
-      required_check {
-        context        = "testacc (1.15.*)"
+        context        = "testacc"
         integration_id = local.github_actions_integration_id
       }
     }
