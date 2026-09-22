@@ -20,6 +20,8 @@ module "booze_ruleset_ci" {
   repository = module.booze_repository.name
   name       = "ci"
 
+  strict_required_status_checks_policy = true
+
   required_status_checks = {
     ci = local.github_actions_integration_id
   }
