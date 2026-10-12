@@ -13,3 +13,15 @@ projects:
         - "*.tf*"
         - ".terraform.lock.hcl"
         - "../../atlantis.yaml"
+  - dir: cloudflare/chikachow/account
+    autoplan:
+      when_modified:
+        - "*.tf*"
+        - ".terraform.lock.hcl"
+        - "../../../atlantis.yaml"
+  - dir: cloudflare/chikachow/zones/chikachow-org
+    autoplan:
+      when_modified:
+        - "*.tf*"
+        - ".terraform.lock.hcl"
+        - "../../../../atlantis.yaml"

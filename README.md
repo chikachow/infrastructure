@@ -1,17 +1,10 @@
 # Chikachow Infrastructure
 
-Terraform monorepo for `chikachow` infrastructure and related accounts.
+Terraform configuration for Chikachow and related accounts.
 
-## Roots
+- GitHub roots: [chikachow](github/chikachow) and [cysp](github/cysp).
+- Cloudflare roots: [chikachow account](cloudflare/chikachow/account) and [chikachow.org zone](cloudflare/chikachow/zones/chikachow-org).
+- Shared [modules](modules) for GitHub repositories and rulesets.
 
-| Root | Manages |
-| --- | --- |
-| `github/chikachow` | GitHub resources for `chikachow`. |
-| `github/cysp` | GitHub resources for `cysp`. |
-
-## Repository composition
-
-Keep each repository in one file, composing the core repository module with
-focused capability modules. Use keyed `for_each` only when a repository repeats
-the same capability; those keys are Terraform state identities, so renaming one
-requires a `moved` block. Keep bespoke raw rulesets explicit.
+[atlantis.yaml](atlantis.yaml) registers the Terraform roots for Atlantis.
+The [TFLint workflow](.github/workflows/tflint.yml) checks each root.
