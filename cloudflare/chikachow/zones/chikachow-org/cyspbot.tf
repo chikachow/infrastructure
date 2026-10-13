@@ -7,5 +7,5 @@ resource "cloudflare_workers_route" "cyspbot_github_webhooks" {
 resource "cloudflare_workers_route" "cyspbot_token" {
   zone_id = local.zone_id
   pattern = "cyspbot.chikachow.org/token*"
-  script  = "github-app-token-broker"
+  script  = "cyspbot"
 }
