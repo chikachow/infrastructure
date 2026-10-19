@@ -237,3 +237,53 @@ import {
   to = github_actions_variable.terraform_provider_typesense_cyspbot_app_id
   id = "terraform-provider-typesense:CYSPBOT_APP_ID"
 }
+
+import {
+  to = module.booze_repository.github_repository.this
+  id = "booze"
+}
+
+import {
+  to = module.booze_repository.github_branch_default.this[0]
+  id = "booze"
+}
+
+import {
+  to = module.booze_repository.github_repository_dependabot_security_updates.this[0]
+  id = "booze"
+}
+
+import {
+  to = module.booze_repository.github_repository_vulnerability_alerts.this[0]
+  id = "booze"
+}
+
+import {
+  to = module.booze_ruleset_protect_default_branch.github_repository_ruleset.this
+  id = "booze:17061251"
+}
+
+import {
+  to = module.booze_ruleset_ci.github_repository_ruleset.this
+  id = "booze:17061252"
+}
+
+import {
+  to = module.perfumery_repository.github_repository.this
+  id = "perfumery"
+}
+
+import {
+  to = module.perfumery_repository.github_branch_default.this[0]
+  id = "perfumery"
+}
+
+import {
+  to = module.perfumery_repository.github_repository_dependabot_security_updates.this[0]
+  id = "perfumery"
+}
+
+import {
+  to = module.perfumery_repository.github_repository_vulnerability_alerts.this[0]
+  id = "perfumery"
+}
