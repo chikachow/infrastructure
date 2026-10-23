@@ -76,3 +76,94 @@ resource "github_actions_variable" "terraform_provider_contentful" {
   variable_name = each.key
   value         = each.value
 }
+
+resource "github_repository_environment" "terraform_provider_contentful_release" {
+  for_each = toset(["release", "release-preparation"])
+
+  repository        = module.terraform_provider_contentful_repository.name
+  environment       = each.key
+  can_admins_bypass = false
+
+  deployment_branch_policy {
+    protected_branches     = false
+    custom_branch_policies = true
+  }
+}
+
+resource "github_repository_environment_deployment_policy" "terraform_provider_contentful_release" {
+  repository  = module.terraform_provider_contentful_repository.name
+  environment = github_repository_environment.terraform_provider_contentful_release["release"].environment
+  tag_pattern = "v*"
+}
+
+resource "github_repository_environment_deployment_policy" "terraform_provider_contentful_release_preparation" {
+  repository     = module.terraform_provider_contentful_repository.name
+  environment    = github_repository_environment.terraform_provider_contentful_release["release-preparation"].environment
+  branch_pattern = "main"
+}
+
+resource "github_actions_environment_variable" "terraform_provider_contentful_release_app_client_id" {
+  count = var.terraform_provider_contentful_release_app == null ? 0 : 1
+
+  repository    = module.terraform_provider_contentful_repository.name
+  environment   = github_repository_environment.terraform_provider_contentful_release["release-preparation"].environment
+  variable_name = "RELEASE_APP_CLIENT_ID"
+  value         = var.terraform_provider_contentful_release_app.client_id
+}
+
+resource "github_repository_ruleset" "terraform_provider_contentful_release_tag_creation" {
+  repository  = module.terraform_provider_contentful_repository.name
+  name        = "Restrict release tag creation"
+  target      = "tag"
+  enforcement = "active"
+
+  # Preserve the existing maintainer's ability to create recovery tags.
+  bypass_actors {
+    actor_id    = 742696
+    actor_type  = "User"
+    bypass_mode = "always"
+  }
+
+  dynamic "bypass_actors" {
+    for_each = var.terraform_provider_contentful_release_app == null ? [] : [var.terraform_provider_contentful_release_app]
+
+    content {
+      actor_id    = bypass_actors.value.app_id
+      actor_type  = "Integration"
+      bypass_mode = "always"
+    }
+  }
+
+  conditions {
+    ref_name {
+      include = ["refs/tags/v*"]
+      exclude = []
+    }
+  }
+
+  rules {
+    creation = true
+  }
+
+  # Install immutable tag protection before narrowing the imported combined rule.
+  depends_on = [github_repository_ruleset.terraform_provider_contentful_release_tag_mutation]
+}
+
+resource "github_repository_ruleset" "terraform_provider_contentful_release_tag_mutation" {
+  repository  = module.terraform_provider_contentful_repository.name
+  name        = "Prevent release tag changes"
+  target      = "tag"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["refs/tags/v*"]
+      exclude = []
+    }
+  }
+
+  rules {
+    update   = true
+    deletion = true
+  }
+}
