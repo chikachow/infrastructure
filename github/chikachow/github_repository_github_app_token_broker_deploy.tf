@@ -40,4 +40,15 @@ module "github_app_token_broker_deploy_ruleset_required_status_checks" {
 resource "github_repository_environment" "github_app_token_broker_deploy_production" {
   repository  = module.github_app_token_broker_deploy_repository.name
   environment = "production"
+
+  deployment_branch_policy {
+    protected_branches     = false
+    custom_branch_policies = true
+  }
+}
+
+resource "github_repository_environment_deployment_policy" "github_app_token_broker_deploy_production_main" {
+  repository     = module.github_app_token_broker_deploy_repository.name
+  environment    = github_repository_environment.github_app_token_broker_deploy_production.environment
+  branch_pattern = "main"
 }
