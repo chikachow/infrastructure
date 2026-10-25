@@ -6,10 +6,35 @@ module "github_app_token_broker_deploy_repository" {
   visibility  = "private"
 
   allow_auto_merge = false
-  default_branch   = null
 
   dependabot_security_updates_enabled = null
   vulnerability_alerts_enabled        = null
+}
+
+module "github_app_token_broker_deploy_ruleset_protect_default_branch" {
+  source = "../../modules/github-repository-ruleset-protect-default-branch"
+
+  repository = module.github_app_token_broker_deploy_repository.name
+}
+
+module "github_app_token_broker_deploy_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.github_app_token_broker_deploy_repository.name
+
+  required_review_thread_resolution = true
+  required_approving_review_count   = 0
+}
+
+module "github_app_token_broker_deploy_ruleset_required_status_checks" {
+  source = "../../modules/github-repository-ruleset-required-status-checks"
+
+  repository = module.github_app_token_broker_deploy_repository.name
+  name       = "Required status checks"
+
+  required_status_checks = {
+    ci = local.github_actions_integration_id
+  }
 }
 
 resource "github_repository_environment" "github_app_token_broker_deploy_production" {
