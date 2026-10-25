@@ -21,3 +21,8 @@ check.
 If required checks prevent a necessary repair and no bypass actors are configured,
 a repository administrator can edit the rulesets. After recovery, restore the
 intended rules and reconcile any manual changes with Terraform.
+
+A deployment branch policy allowing `main` with no tag policies permits only
+workflow runs on `main`. This policy matches the workflow run's `GITHUB_REF`, not
+a commit checked out by a job. Commit selection and validation remain the
+responsibility of the deployment workflows.
