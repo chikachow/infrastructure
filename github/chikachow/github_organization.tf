@@ -10,7 +10,9 @@ resource "github_organization_settings" "chikachow" {
   members_can_create_public_repositories   = false
   members_can_create_private_repositories  = false
   members_can_create_internal_repositories = false
-  members_can_create_pages                 = true
+  members_can_create_pages                 = false
+  members_can_create_public_pages          = false
+  members_can_create_private_pages         = false
   members_can_fork_private_repositories    = false
 
   web_commit_signoff_required = false
