@@ -4,6 +4,24 @@ variable "cysp_terraform_github_app_id" {
   default     = "3855267"
 }
 
+variable "terraform_provider_contentful_release_app" {
+  description = "Dedicated release GitHub App identity. Set after installing it only on terraform-provider-contentful; store its private key directly in the release-preparation environment."
+  type = object({
+    app_id    = number
+    client_id = string
+  })
+  default = null
+
+  validation {
+    condition = var.terraform_provider_contentful_release_app == null ? true : (
+      var.terraform_provider_contentful_release_app.app_id > 0 &&
+      floor(var.terraform_provider_contentful_release_app.app_id) == var.terraform_provider_contentful_release_app.app_id &&
+      length(trimspace(var.terraform_provider_contentful_release_app.client_id)) > 0
+    )
+    error_message = "Provide a positive integer App ID and a nonempty client ID."
+  }
+}
+
 variable "cysp_terraform_github_app_installation_id" {
   description = "GitHub App installation ID for the cysp-terraform GitHub App installed in the cysp account."
   type        = string

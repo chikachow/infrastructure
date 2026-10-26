@@ -154,6 +154,21 @@ import {
 }
 
 import {
+  to = github_repository_environment.terraform_provider_contentful_release["release"]
+  id = "terraform-provider-contentful:release"
+}
+
+import {
+  to = github_repository_environment_deployment_policy.terraform_provider_contentful_release
+  id = "terraform-provider-contentful:release:58073963"
+}
+
+import {
+  to = github_repository_ruleset.terraform_provider_contentful_release_tag_creation
+  id = "terraform-provider-contentful:21243847"
+}
+
+import {
   to = module.terraform_provider_contentful_repository.github_branch_default.this[0]
   id = "terraform-provider-contentful"
 }
