@@ -7,6 +7,13 @@ module "terraform_provider_censusworkspace_repository" {
   has_issues = true
 }
 
+resource "github_actions_repository_permissions" "terraform_provider_censusworkspace" {
+  repository           = module.terraform_provider_censusworkspace_repository.name
+  enabled              = true
+  allowed_actions      = "all"
+  sha_pinning_required = true
+}
+
 module "terraform_provider_censusworkspace_ruleset_protect_default_branch" {
   source = "../../modules/github-repository-ruleset-protect-default-branch"
 
@@ -17,18 +24,27 @@ module "terraform_provider_censusworkspace_status_rulesets" {
   for_each = {
     require_clean_linting = {
       name = "Require clean linting"
+      bypass_actors = [
+        local.github_repository_role_maintain_pull_request_bypass_actor,
+      ]
       required_status_checks = {
         lint = local.github_actions_integration_id
       }
     }
     require_passing_tests = {
       name = "Require passing tests"
+      bypass_actors = [
+        local.github_repository_role_maintain_pull_request_bypass_actor,
+      ]
       required_status_checks = {
         test = local.github_actions_integration_id
       }
     }
     require_test_coverage = {
       name = "Require test coverage"
+      bypass_actors = [
+        local.github_repository_role_maintain_pull_request_bypass_actor,
+      ]
       required_status_checks = {
         "codecov/project" = local.codecov_integration_id
       }
@@ -40,6 +56,7 @@ module "terraform_provider_censusworkspace_status_rulesets" {
   repository = module.terraform_provider_censusworkspace_repository.name
   name       = each.value.name
 
+  bypass_actors          = try(each.value.bypass_actors, [])
   required_status_checks = each.value.required_status_checks
 }
 

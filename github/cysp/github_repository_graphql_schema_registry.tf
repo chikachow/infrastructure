@@ -5,12 +5,17 @@ module "graphql_schema_registry_repository" {
   visibility = "public"
 }
 
+resource "github_actions_repository_permissions" "graphql_schema_registry" {
+  repository           = module.graphql_schema_registry_repository.name
+  enabled              = true
+  allowed_actions      = "all"
+  sha_pinning_required = true
+}
+
 module "graphql_schema_registry_ruleset_protect_default_branch" {
   source = "../../modules/github-repository-ruleset-protect-default-branch"
 
   repository = module.graphql_schema_registry_repository.name
-
-  bypass_actors = [local.github_repository_role_admin_always_bypass_actor]
 }
 
 resource "github_repository_ruleset" "graphql_schema_registry_require_pull_request" {

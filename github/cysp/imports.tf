@@ -287,3 +287,38 @@ import {
   to = module.perfumery_repository.github_repository_vulnerability_alerts.this[0]
   id = "perfumery"
 }
+
+import {
+  to = github_actions_repository_permissions.booze
+  id = "booze"
+}
+
+import {
+  to = github_actions_repository_permissions.graphql_schema_registry
+  id = "graphql-schema-registry"
+}
+
+import {
+  to = github_actions_repository_permissions.perfumery
+  id = "perfumery"
+}
+
+import {
+  to = github_actions_repository_permissions.terraform_provider_braze
+  id = "terraform-provider-braze"
+}
+
+import {
+  to = github_actions_repository_permissions.terraform_provider_censusworkspace
+  id = "terraform-provider-censusworkspace"
+}
+
+import {
+  to = github_actions_repository_permissions.terraform_provider_contentful
+  id = "terraform-provider-contentful"
+}
+
+import {
+  to = github_actions_repository_permissions.terraform_provider_typesense
+  id = "terraform-provider-typesense"
+}

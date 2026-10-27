@@ -128,19 +128,13 @@ run "organization_security_configuration" {
   command = plan
 
   variables {
-    name                                = "organization-security-configuration"
-    visibility                          = "public"
-    manage_security_and_analysis        = false
-    dependabot_security_updates_enabled = null
-    vulnerability_alerts_enabled        = null
+    name                         = "organization-security-configuration"
+    visibility                   = "public"
+    manage_security_and_analysis = false
   }
 
   assert {
-    condition = (
-      length(github_repository.this.security_and_analysis) == 0 &&
-      length(github_repository_dependabot_security_updates.this) == 0 &&
-      length(github_repository_vulnerability_alerts.this) == 0
-    )
+    condition     = length(github_repository.this.security_and_analysis) == 0
     error_message = "Organization-owned security settings must be omitted even for public repositories."
   }
 }

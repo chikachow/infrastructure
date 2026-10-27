@@ -7,6 +7,13 @@ module "terraform_provider_typesense_repository" {
   has_issues = true
 }
 
+resource "github_actions_repository_permissions" "terraform_provider_typesense" {
+  repository           = module.terraform_provider_typesense_repository.name
+  enabled              = true
+  allowed_actions      = "all"
+  sha_pinning_required = true
+}
+
 resource "github_repository_ruleset" "terraform_provider_typesense_main" {
   repository = module.terraform_provider_typesense_repository.name
 

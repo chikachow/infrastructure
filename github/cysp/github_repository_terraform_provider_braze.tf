@@ -7,6 +7,13 @@ module "terraform_provider_braze_repository" {
   has_issues = true
 }
 
+resource "github_actions_repository_permissions" "terraform_provider_braze" {
+  repository           = module.terraform_provider_braze_repository.name
+  enabled              = true
+  allowed_actions      = "all"
+  sha_pinning_required = true
+}
+
 module "terraform_provider_braze_ruleset_protect_default_branch" {
   source = "../../modules/github-repository-ruleset-protect-default-branch"
 
@@ -18,6 +25,8 @@ module "terraform_provider_braze_ruleset_require_passing_tests" {
 
   repository = module.terraform_provider_braze_repository.name
   name       = "Require passing tests"
+
+  bypass_actors = [local.github_repository_role_admin_pull_request_bypass_actor]
 
   required_status_checks = {
     test               = local.github_actions_integration_id
