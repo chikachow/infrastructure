@@ -8,6 +8,13 @@ module "booze_repository" {
   allow_forking = true
 }
 
+resource "github_actions_repository_permissions" "booze" {
+  repository           = module.booze_repository.name
+  enabled              = true
+  allowed_actions      = "all"
+  sha_pinning_required = true
+}
+
 module "booze_ruleset_protect_default_branch" {
   source = "../../modules/github-repository-ruleset-protect-default-branch"
 
