@@ -3,6 +3,10 @@ module "infrastructure_repository" {
 
   name       = "infrastructure"
   visibility = "public"
+
+  manage_security_and_analysis        = false
+  dependabot_security_updates_enabled = null
+  vulnerability_alerts_enabled        = null
 }
 
 module "infrastructure_ruleset_protect_default_branch" {
@@ -34,4 +38,16 @@ module "infrastructure_status_rulesets" {
 
   bypass_actors          = try(each.value.bypass_actors, [])
   required_status_checks = each.value.required_status_checks
+}
+
+module "infrastructure_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.infrastructure_repository.name
+}
+
+module "infrastructure_ruleset_require_codeql" {
+  source = "../../modules/github-repository-ruleset-require-codeql"
+
+  repository = module.infrastructure_repository.name
 }

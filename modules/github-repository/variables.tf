@@ -143,6 +143,12 @@ variable "squash_merge_commit_title" {
   default     = "COMMIT_OR_PR_TITLE"
 }
 
+variable "manage_security_and_analysis" {
+  description = "Whether Terraform manages repository security_and_analysis. Disable when an organization security configuration owns these settings."
+  type        = bool
+  default     = true
+}
+
 variable "security_and_analysis" {
   description = "Repository security_and_analysis settings. Public repositories default secret scanning and push protection to enabled. Private and internal repositories leave those settings unmanaged unless advanced_security or the specific setting is explicitly configured."
   type = object({

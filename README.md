@@ -7,12 +7,17 @@ Terraform configuration for Chikachow and related accounts.
 - Shared [modules](modules) for GitHub repositories and rulesets.
 
 [atlantis.yaml](atlantis.yaml) registers the Terraform roots for Atlantis.
-The [TFLint workflow](.github/workflows/tflint.yml) checks each root.
+The [TFLint workflow](.github/workflows/tflint.yml) checks formatting, validates and
+lints each root, and runs the mocked GitHub module tests. Its required aggregate
+check remains `tflint`.
 
 ## GitHub repository policies
 
 Each repository's settings, rulesets, and environments are declared in its
 `github_repository_*.tf` file within the relevant GitHub root.
+
+For security settings outside the locked provider, use the
+[ownership and drift-check procedure](docs/operations/github-security-ownership.md).
 
 Required status check contexts must match the check names reported by GitHub
 Actions. Update the repository's ruleset configuration when renaming a required

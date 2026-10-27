@@ -5,6 +5,7 @@ module "cloudflare_workload_identity_repository" {
   visibility     = "public"
   default_branch = null
 
+  manage_security_and_analysis        = false
   dependabot_security_updates_enabled = null
   vulnerability_alerts_enabled        = null
 }
@@ -35,4 +36,10 @@ module "cloudflare_workload_identity_ruleset_require_codeql" {
 resource "github_repository_environment" "cloudflare_workload_identity_production" {
   repository  = module.cloudflare_workload_identity_repository.name
   environment = "production"
+}
+
+module "cloudflare_workload_identity_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.cloudflare_workload_identity_repository.name
 }

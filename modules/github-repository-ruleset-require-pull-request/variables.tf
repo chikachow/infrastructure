@@ -65,7 +65,7 @@ variable "required_approving_review_count" {
 variable "required_review_thread_resolution" {
   description = "Whether all pull request review threads must be resolved before merge."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "bypass_actors" {

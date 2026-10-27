@@ -3,6 +3,10 @@ module "cyspbot_repository" {
 
   name       = "cyspbot"
   visibility = "public"
+
+  manage_security_and_analysis        = false
+  dependabot_security_updates_enabled = null
+  vulnerability_alerts_enabled        = null
 }
 
 module "cyspbot_ruleset_protect_default_branch" {
@@ -31,4 +35,10 @@ module "cyspbot_ruleset_require_codeql" {
 resource "github_repository_environment" "cyspbot_production" {
   repository  = module.cyspbot_repository.name
   environment = "production"
+}
+
+module "cyspbot_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.cyspbot_repository.name
 }

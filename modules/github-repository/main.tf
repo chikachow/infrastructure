@@ -18,7 +18,7 @@ locals {
     )
   }
 
-  manage_security_and_analysis = anytrue([
+  manage_security_and_analysis = var.manage_security_and_analysis && anytrue([
     for value in values(local.effective_security_and_analysis) : value != null
   ])
 }

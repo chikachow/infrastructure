@@ -19,8 +19,6 @@ module "terraform_provider_braze_ruleset_require_passing_tests" {
   repository = module.terraform_provider_braze_repository.name
   name       = "Require passing tests"
 
-  bypass_actors = [local.github_repository_role_admin_pull_request_bypass_actor]
-
   required_status_checks = {
     test               = local.github_actions_integration_id
     "testacc (1.13.*)" = local.github_actions_integration_id
@@ -38,4 +36,10 @@ resource "github_actions_variable" "terraform_provider_braze_cyspbot_app_id" {
   repository    = module.terraform_provider_braze_repository.name
   variable_name = "CYSPBOT_APP_ID"
   value         = local.cyspbot_github_app_id
+}
+
+module "terraform_provider_braze_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.terraform_provider_braze_repository.name
 }
