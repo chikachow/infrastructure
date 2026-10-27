@@ -5,8 +5,6 @@ module "cloudflare_workload_identity_deploy_repository" {
   description = "Private deployment pipeline for chikachow/cloudflare-workload-identity"
   visibility  = "private"
 
-  allow_auto_merge = false
-
   dependabot_security_updates_enabled = null
   vulnerability_alerts_enabled        = null
 }
