@@ -134,8 +134,3 @@ resource "github_repository_ruleset" "terraform_provider_contentful_release_tag_
     deletion = true
   }
 }
-
-import {
-  to = github_repository_ruleset.terraform_provider_contentful_release_tags
-  id = "terraform-provider-contentful:21243847"
-}
