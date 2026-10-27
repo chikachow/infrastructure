@@ -5,6 +5,7 @@ module "github_app_token_broker_deploy_repository" {
   description = "Private deployment pipeline for chikachow/github-app-token-broker"
   visibility  = "private"
 
+  manage_security_and_analysis        = false
   dependabot_security_updates_enabled = null
   vulnerability_alerts_enabled        = null
 }

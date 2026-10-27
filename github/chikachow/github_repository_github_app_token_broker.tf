@@ -5,6 +5,7 @@ module "github_app_token_broker_repository" {
   visibility     = "public"
   default_branch = "main"
 
+  manage_security_and_analysis        = false
   dependabot_security_updates_enabled = null
   vulnerability_alerts_enabled        = null
 }
@@ -35,4 +36,10 @@ module "github_app_token_broker_ruleset_require_codeql" {
 resource "github_repository_environment" "github_app_token_broker_production" {
   repository  = module.github_app_token_broker_repository.name
   environment = "production"
+}
+
+module "github_app_token_broker_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.github_app_token_broker_repository.name
 }

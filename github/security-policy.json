@@ -1,0 +1,96 @@
+{
+  "organization": "chikachow",
+  "configurations": [
+    {
+      "id": 249719,
+      "default_for_new_repos": "public",
+      "repositories": [
+        "cloudflare-workload-identity",
+        "cyspbot",
+        "cyspbot-app-token-action",
+        "github-app-token-broker",
+        "infrastructure"
+      ],
+      "settings": {
+        "enforcement": "enforced",
+        "dependency_graph": "enabled",
+        "dependabot_alerts": "enabled",
+        "dependabot_security_updates": "enabled",
+        "private_vulnerability_reporting": "not_set",
+        "secret_scanning_validity_checks": "disabled",
+        "secret_scanning_extended_metadata": "disabled",
+        "secret_scanning_non_provider_patterns": "disabled",
+        "secret_scanning_generic_secrets": "disabled",
+        "advanced_security": "enabled",
+        "code_scanning_default_setup": "enabled",
+        "secret_scanning": "enabled",
+        "secret_scanning_push_protection": "enabled"
+      },
+      "effective_security": {
+        "secret_scanning": {
+          "status": "enabled"
+        },
+        "secret_scanning_push_protection": {
+          "status": "enabled"
+        },
+        "secret_scanning_validity_checks": {
+          "status": "disabled"
+        },
+        "secret_scanning_non_provider_patterns": {
+          "status": "disabled"
+        }
+      }
+    },
+    {
+      "id": 287967,
+      "default_for_new_repos": "private_and_internal",
+      "repositories": [
+        "atlantis-deploy",
+        "cloudflare-workload-identity-deploy",
+        "cyspbot-deploy",
+        "github-app-token-broker-deploy"
+      ],
+      "settings": {
+        "enforcement": "enforced",
+        "dependency_graph": "enabled",
+        "dependabot_alerts": "enabled",
+        "dependabot_security_updates": "enabled",
+        "private_vulnerability_reporting": "not_set",
+        "secret_scanning_validity_checks": "disabled",
+        "secret_scanning_extended_metadata": "disabled",
+        "secret_scanning_non_provider_patterns": "disabled",
+        "secret_scanning_generic_secrets": "disabled",
+        "advanced_security": "disabled",
+        "code_scanning_default_setup": "disabled",
+        "secret_scanning": "disabled",
+        "secret_scanning_push_protection": "disabled"
+      },
+      "effective_security": {
+        "code_security": {
+          "status": "disabled"
+        },
+        "secret_scanning": {
+          "status": "disabled"
+        },
+        "secret_scanning_push_protection": {
+          "status": "disabled"
+        },
+        "secret_scanning_validity_checks": {
+          "status": "disabled"
+        },
+        "secret_scanning_non_provider_patterns": {
+          "status": "disabled"
+        }
+      }
+    }
+  ],
+  "read_only_workflow_tokens": [
+    "cysp/booze",
+    "cysp/graphql-schema-registry",
+    "cysp/perfumery",
+    "cysp/terraform-provider-braze",
+    "cysp/terraform-provider-censusworkspace",
+    "cysp/terraform-provider-contentful",
+    "cysp/terraform-provider-typesense"
+  ]
+}

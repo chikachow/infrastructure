@@ -4,6 +4,10 @@ module "atlantis_deploy_repository" {
   name        = "atlantis-deploy"
   description = "Fly.io deployment pipeline for chikachow Atlantis"
   visibility  = "private"
+
+  manage_security_and_analysis        = false
+  dependabot_security_updates_enabled = null
+  vulnerability_alerts_enabled        = null
 }
 
 module "atlantis_deploy_ruleset_protect_default_branch" {

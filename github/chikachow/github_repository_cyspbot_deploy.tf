@@ -4,6 +4,10 @@ module "cyspbot_deploy_repository" {
   name        = "cyspbot-deploy"
   description = "Private deployment pipeline for chikachow/cyspbot"
   visibility  = "private"
+
+  manage_security_and_analysis        = false
+  dependabot_security_updates_enabled = null
+  vulnerability_alerts_enabled        = null
 }
 
 module "cyspbot_deploy_ruleset_protect_default_branch" {

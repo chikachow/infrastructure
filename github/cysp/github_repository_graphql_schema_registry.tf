@@ -32,10 +32,10 @@ resource "github_repository_ruleset" "graphql_schema_registry_require_pull_reque
     pull_request {
       allowed_merge_methods             = ["rebase", "merge", "squash"]
       dismiss_stale_reviews_on_push     = false
-      require_code_owner_review         = true
+      require_code_owner_review         = false
       require_last_push_approval        = false
       required_approving_review_count   = 0
-      required_review_thread_resolution = false
+      required_review_thread_resolution = true
     }
 
     required_status_checks {
@@ -100,4 +100,10 @@ resource "github_actions_variable" "graphql_schema_registry" {
   repository    = module.graphql_schema_registry_repository.name
   variable_name = each.key
   value         = each.value
+}
+
+module "graphql_schema_registry_ruleset_require_codeql" {
+  source = "../../modules/github-repository-ruleset-require-codeql"
+
+  repository = module.graphql_schema_registry_repository.name
 }

@@ -21,7 +21,7 @@ resource "github_organization_settings" "chikachow" {
 resource "github_actions_organization_permissions" "chikachow" {
   enabled_repositories = "all"
   allowed_actions      = "all"
-  sha_pinning_required = false
+  sha_pinning_required = true
 }
 
 resource "github_actions_organization_workflow_permissions" "chikachow" {

@@ -18,18 +18,12 @@ module "terraform_provider_contentful_status_rulesets" {
   for_each = {
     require_lint = {
       name = "Require lint"
-      bypass_actors = [
-        local.github_repository_role_maintain_pull_request_bypass_actor,
-      ]
       required_status_checks = {
         lint = local.github_actions_integration_id
       }
     }
     require_passing_tests = {
       name = "Require passing tests"
-      bypass_actors = [
-        local.github_repository_role_maintain_always_bypass_actor,
-      ]
       required_status_checks = {
         "testaccmocked (1.16.*)"      = local.github_actions_integration_id
         "testacc (1.16.*)"            = local.github_actions_integration_id
@@ -40,9 +34,6 @@ module "terraform_provider_contentful_status_rulesets" {
     }
     require_test_coverage = {
       name = "Require test coverage"
-      bypass_actors = [
-        local.github_repository_role_maintain_always_bypass_actor,
-      ]
       required_status_checks = {
         "codecov/project" = local.codecov_integration_id
       }
@@ -54,7 +45,6 @@ module "terraform_provider_contentful_status_rulesets" {
   repository = module.terraform_provider_contentful_repository.name
   name       = each.value.name
 
-  bypass_actors          = try(each.value.bypass_actors, [])
   required_status_checks = each.value.required_status_checks
 }
 
@@ -75,4 +65,41 @@ resource "github_actions_variable" "terraform_provider_contentful" {
   repository    = module.terraform_provider_contentful_repository.name
   variable_name = each.key
   value         = each.value
+}
+
+module "terraform_provider_contentful_ruleset_require_pull_request" {
+  source = "../../modules/github-repository-ruleset-require-pull-request"
+
+  repository = module.terraform_provider_contentful_repository.name
+}
+
+resource "github_repository_ruleset" "terraform_provider_contentful_release_tags" {
+  repository  = module.terraform_provider_contentful_repository.name
+  name        = "Protect release tags"
+  target      = "tag"
+  enforcement = "active"
+
+  bypass_actors {
+    actor_id    = 742696
+    actor_type  = "User"
+    bypass_mode = "always"
+  }
+
+  conditions {
+    ref_name {
+      include = ["refs/tags/v*"]
+      exclude = []
+    }
+  }
+
+  rules {
+    creation = true
+    update   = true
+    deletion = true
+  }
+}
+
+import {
+  to = github_repository_ruleset.terraform_provider_contentful_release_tags
+  id = "terraform-provider-contentful:21243847"
 }

@@ -32,7 +32,7 @@ resource "github_repository_ruleset" "terraform_provider_typesense_main" {
       require_code_owner_review         = false
       require_last_push_approval        = false
       required_approving_review_count   = 0
-      required_review_thread_resolution = false
+      required_review_thread_resolution = true
     }
 
     required_status_checks {

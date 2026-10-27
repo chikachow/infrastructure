@@ -6,6 +6,10 @@ module "cyspbot_app_token_action_repository" {
 
   has_issues    = true
   allow_forking = true
+
+  manage_security_and_analysis        = false
+  dependabot_security_updates_enabled = null
+  vulnerability_alerts_enabled        = null
 }
 
 module "cyspbot_app_token_action_ruleset_protect_default_branch" {
