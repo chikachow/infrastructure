@@ -22,7 +22,8 @@ module "cyspbot_ruleset_ci" {
   name       = "ci"
 
   required_status_checks = {
-    ci = local.github_actions_integration_id
+    ci                = local.github_actions_integration_id
+    dependency-review = local.github_actions_integration_id
   }
 }
 
