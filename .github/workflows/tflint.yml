@@ -36,6 +36,9 @@ jobs:
 
       - run: terraform -chdir="${{ matrix.root }}" validate
 
+      - if: matrix.root == 'github/cysp'
+        run: terraform -chdir="${{ matrix.root }}" test
+
       - run: tflint --chdir="${{ matrix.root }}" --format=compact
 
   format:

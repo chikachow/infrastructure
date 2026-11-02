@@ -102,6 +102,12 @@ resource "github_repository_ruleset" "terraform_provider_contentful_release_tags
     bypass_mode = "always"
   }
 
+  bypass_actors {
+    actor_id    = local.cyspbot_releaser_github_app_id
+    actor_type  = "Integration"
+    bypass_mode = "always"
+  }
+
   conditions {
     ref_name {
       include = ["refs/tags/v*"]
@@ -111,9 +117,9 @@ resource "github_repository_ruleset" "terraform_provider_contentful_release_tags
 
   rules {
     creation = true
-    update   = true
-    deletion = true
   }
+
+  depends_on = [github_repository_ruleset.terraform_provider_contentful_release_tag_immutability]
 }
 
 resource "github_repository_ruleset" "terraform_provider_contentful_release_tag_immutability" {
