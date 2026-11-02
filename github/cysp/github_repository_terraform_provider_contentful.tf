@@ -29,7 +29,7 @@ module "terraform_provider_contentful_status_rulesets" {
         local.github_repository_role_maintain_pull_request_bypass_actor,
       ]
       required_status_checks = {
-        lint = local.github_actions_integration_id
+        "lint / lint" = local.github_actions_integration_id
       }
     }
     require_passing_tests = {
@@ -38,11 +38,10 @@ module "terraform_provider_contentful_status_rulesets" {
         local.github_repository_role_maintain_pull_request_bypass_actor,
       ]
       required_status_checks = {
-        "testaccmocked (1.16.*)"      = local.github_actions_integration_id
-        "testacc (1.16.*)"            = local.github_actions_integration_id
-        "testaccmocked (1.15.*)"      = local.github_actions_integration_id
-        test                          = local.github_actions_integration_id
-        contentful-management-go-test = local.github_actions_integration_id
+        "test / testaccmocked (1.16.*)" = local.github_actions_integration_id
+        "test / testacc (1.16.*)"       = local.github_actions_integration_id
+        "test / testaccmocked (1.15.*)" = local.github_actions_integration_id
+        "test / test"                   = local.github_actions_integration_id
       }
     }
     require_test_coverage = {
@@ -106,4 +105,39 @@ module "terraform_provider_contentful_ruleset_protect_release_tags" {
       bypass_mode = "always"
     },
   ]
+}
+
+resource "github_repository_environment" "terraform_provider_contentful_release" {
+  for_each = toset(["release", "release-preparation"])
+
+  repository        = module.terraform_provider_contentful_repository.name
+  environment       = each.key
+  can_admins_bypass = false
+
+  deployment_branch_policy {
+    protected_branches     = false
+    custom_branch_policies = true
+  }
+}
+
+resource "github_repository_environment_deployment_policy" "terraform_provider_contentful_release" {
+  repository  = module.terraform_provider_contentful_repository.name
+  environment = github_repository_environment.terraform_provider_contentful_release["release"].environment
+  tag_pattern = "v*"
+}
+
+resource "github_repository_environment_deployment_policy" "terraform_provider_contentful_release_preparation" {
+  repository     = module.terraform_provider_contentful_repository.name
+  environment    = github_repository_environment.terraform_provider_contentful_release["release-preparation"].environment
+  branch_pattern = "main"
+}
+
+import {
+  to = github_repository_environment.terraform_provider_contentful_release["release"]
+  id = "terraform-provider-contentful:release"
+}
+
+import {
+  to = github_repository_environment_deployment_policy.terraform_provider_contentful_release
+  id = "terraform-provider-contentful:release:58073963"
 }
