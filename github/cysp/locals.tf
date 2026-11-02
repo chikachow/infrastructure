@@ -15,9 +15,10 @@ locals {
     bypass_mode = "pull_request"
   }
 
-  github_actions_integration_id = 15368
-  codecov_integration_id        = 254
-  cyspbot_github_app_id         = "2419473"
+  github_actions_integration_id  = 15368
+  codecov_integration_id         = 254
+  cyspbot_github_app_id          = "2419473"
+  cyspbot_releaser_github_app_id = 5575251
 
   terraform_github_app_pem_file_provided = nonsensitive(var.cysp_terraform_github_app_pem_file != null)
   terraform_github_app_auth_enabled = (

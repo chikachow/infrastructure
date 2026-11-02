@@ -26,3 +26,12 @@ A deployment branch policy allowing `main` with no tag policies permits only
 workflow runs on `main`. This policy matches the workflow run's `GITHUB_REF`, not
 a commit checked out by a job. Commit selection and validation remain the
 responsibility of the deployment workflows.
+
+The chikachow-owned `cyspbot-releaser` GitHub App is shared release automation.
+`github/cysp/locals.tf` records its App ID; each repository explicitly grants
+any required tag-creation bypass separately from tag mutation protection.
+App registration, key provisioning, and installation are managed outside this
+root. The provider's [installation resource](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/app_installation_repository)
+does not support the GitHub App authentication used by Atlantis. The
+[token broker deployment](https://github.com/chikachow/github-app-token-broker-deploy)
+owns the release App's key binding and repository-specific token issuance policy.
