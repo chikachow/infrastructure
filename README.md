@@ -28,8 +28,10 @@ a commit checked out by a job. Commit selection and validation remain the
 responsibility of the deployment workflows.
 
 The chikachow-owned `cyspbot-releaser` GitHub App is shared release automation.
-`github/cysp/locals.tf` records its App ID; each repository explicitly grants
-any required tag-creation bypass separately from tag mutation protection.
+`github/cysp/locals.tf` records its App ID; each repository uses
+`github-repository-ruleset-protect-release-tags` to grant creation bypass while
+keeping updates and deletion forbidden. The module applies the same tag
+patterns and enforcement to both rulesets; bypass actors apply only to creation.
 App registration, key provisioning, and installation are managed outside this
 root. The provider's [installation resource](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/app_installation_repository)
 does not support the GitHub App authentication used by Atlantis. The

@@ -90,53 +90,20 @@ module "terraform_provider_contentful_ruleset_require_pull_request" {
   repository = module.terraform_provider_contentful_repository.name
 }
 
-resource "github_repository_ruleset" "terraform_provider_contentful_release_tags" {
-  repository  = module.terraform_provider_contentful_repository.name
-  name        = "Protect release tags"
-  target      = "tag"
-  enforcement = "active"
+module "terraform_provider_contentful_ruleset_protect_release_tags" {
+  source = "../../modules/github-repository-ruleset-protect-release-tags"
 
-  bypass_actors {
-    actor_id    = 742696
-    actor_type  = "User"
-    bypass_mode = "always"
-  }
-
-  bypass_actors {
-    actor_id    = local.cyspbot_releaser_github_app_id
-    actor_type  = "Integration"
-    bypass_mode = "always"
-  }
-
-  conditions {
-    ref_name {
-      include = ["refs/tags/v*"]
-      exclude = []
-    }
-  }
-
-  rules {
-    creation = true
-  }
-
-  depends_on = [github_repository_ruleset.terraform_provider_contentful_release_tag_immutability]
-}
-
-resource "github_repository_ruleset" "terraform_provider_contentful_release_tag_immutability" {
-  repository  = module.terraform_provider_contentful_repository.name
-  name        = "Prevent release tag updates and deletion"
-  target      = "tag"
-  enforcement = "active"
-
-  conditions {
-    ref_name {
-      include = ["refs/tags/v*"]
-      exclude = []
-    }
-  }
-
-  rules {
-    update   = true
-    deletion = true
-  }
+  repository = module.terraform_provider_contentful_repository.name
+  bypass_actors = [
+    {
+      actor_id    = 742696
+      actor_type  = "User"
+      bypass_mode = "always"
+    },
+    {
+      actor_id    = local.cyspbot_releaser_github_app_id
+      actor_type  = "Integration"
+      bypass_mode = "always"
+    },
+  ]
 }
