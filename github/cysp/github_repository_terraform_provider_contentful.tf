@@ -23,25 +23,13 @@ module "terraform_provider_contentful_ruleset_protect_default_branch" {
 
 module "terraform_provider_contentful_status_rulesets" {
   for_each = {
-    require_lint = {
-      name = "Require lint"
+    require_ci = {
+      name = "Require CI"
       bypass_actors = [
         local.github_repository_role_maintain_pull_request_bypass_actor,
       ]
       required_status_checks = {
-        "lint / lint" = local.github_actions_integration_id
-      }
-    }
-    require_passing_tests = {
-      name = "Require passing tests"
-      bypass_actors = [
-        local.github_repository_role_maintain_pull_request_bypass_actor,
-      ]
-      required_status_checks = {
-        "test / testaccmocked (1.16.*)" = local.github_actions_integration_id
-        "test / testacc (1.16.*)"       = local.github_actions_integration_id
-        "test / testaccmocked (1.15.*)" = local.github_actions_integration_id
-        "test / test"                   = local.github_actions_integration_id
+        ci = local.github_actions_integration_id
       }
     }
     require_test_coverage = {
