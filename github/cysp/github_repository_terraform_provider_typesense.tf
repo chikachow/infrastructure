@@ -70,6 +70,24 @@ resource "github_actions_variable" "terraform_provider_typesense_cyspbot_app_id"
   value         = local.cyspbot_github_app_id
 }
 
+module "terraform_provider_typesense_ruleset_protect_release_tags" {
+  source = "../../modules/github-repository-ruleset-protect-release-tags"
+
+  repository = module.terraform_provider_typesense_repository.name
+  bypass_actors = [
+    {
+      actor_id    = 742696
+      actor_type  = "User"
+      bypass_mode = "always"
+    },
+    {
+      actor_id    = local.cyspbot_releaser_github_app_id
+      actor_type  = "Integration"
+      bypass_mode = "always"
+    },
+  ]
+}
+
 resource "github_repository_environment" "terraform_provider_typesense_release" {
   for_each = toset(["release", "release-preparation"])
 
