@@ -46,23 +46,13 @@ resource "github_repository_ruleset" "terraform_provider_typesense_main" {
       strict_required_status_checks_policy = false
 
       required_check {
-        context        = "generate"
+        context        = "ci"
         integration_id = local.github_actions_integration_id
       }
 
       required_check {
-        context        = "test"
-        integration_id = local.github_actions_integration_id
-      }
-
-      required_check {
-        context        = "lint"
-        integration_id = local.github_actions_integration_id
-      }
-
-      required_check {
-        context        = "testacc"
-        integration_id = local.github_actions_integration_id
+        context        = "codecov/project"
+        integration_id = local.codecov_integration_id
       }
     }
   }
