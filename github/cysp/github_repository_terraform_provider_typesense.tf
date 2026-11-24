@@ -69,3 +69,28 @@ resource "github_actions_variable" "terraform_provider_typesense_cyspbot_app_id"
   variable_name = "CYSPBOT_APP_ID"
   value         = local.cyspbot_github_app_id
 }
+
+resource "github_repository_environment" "terraform_provider_typesense_release" {
+  for_each = toset(["release", "release-preparation"])
+
+  repository        = module.terraform_provider_typesense_repository.name
+  environment       = each.key
+  can_admins_bypass = false
+
+  deployment_branch_policy {
+    protected_branches     = false
+    custom_branch_policies = true
+  }
+}
+
+resource "github_repository_environment_deployment_policy" "terraform_provider_typesense_release" {
+  repository  = module.terraform_provider_typesense_repository.name
+  environment = github_repository_environment.terraform_provider_typesense_release["release"].environment
+  tag_pattern = "v*"
+}
+
+resource "github_repository_environment_deployment_policy" "terraform_provider_typesense_release_preparation" {
+  repository     = module.terraform_provider_typesense_repository.name
+  environment    = github_repository_environment.terraform_provider_typesense_release["release-preparation"].environment
+  branch_pattern = "main"
+}
